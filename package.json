@@ -1,0 +1,17 @@
+{
+  "name": "storepi-api-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "StorePI API test suite using Postman and Newman",
+  "scripts": {
+    "smoke": "node -e \"require('fs').mkdirSync('reports',{recursive:true})\" && newman run \"StorePI API Test Automation.postman_collection.json\" -e \"StorePI Test Environment.postman_environment.json\" --folder \"01 Smoke & Catalog\" -r cli,htmlextra --reporter-htmlextra-export \"reports/StorePI_Smoke_Report.html\"",
+    "auth": "node -e \"require('fs').mkdirSync('reports',{recursive:true})\" && newman run \"StorePI API Test Automation.postman_collection.json\" -e \"StorePI Test Environment.postman_environment.json\" --folder \"02 Authentication\" --env-var runMutations=true -r cli,htmlextra --reporter-htmlextra-export \"reports/StorePI_Auth_Report.html\"",
+    "e2e": "node -e \"require('fs').mkdirSync('reports',{recursive:true})\" && newman run \"StorePI API Test Automation.postman_collection.json\" -e \"StorePI Test Environment.postman_environment.json\" --folder \"08 E2E Workflow (explicit opt-in)\" --env-var runMutations=true -r cli,htmlextra --reporter-htmlextra-export \"reports/StorePI_E2E_Report.html\"",
+    "negative": "node -e \"require('fs').mkdirSync('reports',{recursive:true})\" && newman run \"StorePI API Test Automation.postman_collection.json\" -e \"StorePI Test Environment.postman_environment.json\" --folder \"09 Negative & Authorization Checks\" --env-var runNegativeTests=true -r cli,htmlextra --reporter-htmlextra-export \"reports/StorePI_Negative_Report.html\"",
+    "reports:safe": "npm run smoke && npm run negative"
+  },
+  "devDependencies": {
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}

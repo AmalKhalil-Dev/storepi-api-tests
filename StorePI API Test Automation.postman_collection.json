@@ -1,0 +1,2184 @@
+{
+  "info": {
+    "_postman_id": "d9090dea-5416-4f6c-b983-fea042a1baf5",
+    "name": "StorePI API Test Automation",
+    "description": "Postman/Newman test suite for StorePI API. Read-only tests can run safely by default. State-changing requests are skipped unless environment runMutations=true. Read README_AR.md before enabling mutations.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47527955"
+  },
+  "item": [
+    {
+      "name": "01 Smoke & Catalog",
+      "item": [
+        {
+          "name": "GET Products (limit 10)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Categories",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Brands",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/brands",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "brands"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Product by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON with data\", () => {",
+                  "  pm.response.to.be.json;",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products/{{product_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Reviews",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reviews?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Product Reviews",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products/{{product_id}}/reviews?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}",
+                "reviews"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "طلبات القراءة العامة الآمنة. شغّل هذا المجلد أولًا؛ لا ينشئ حسابًا ولا يغير البيانات."
+    },
+    {
+      "name": "02 Authentication",
+      "item": [
+        {
+          "name": "POST Signup (new unique test account)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "const stamp = Date.now();",
+                  "pm.environment.set(\"email\", `qa_student_${stamp}@example.com`);",
+                  "console.log(\"Generated test email:\", pm.environment.get(\"email\"));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.text()) {",
+                  "  const body = pm.response.json();",
+                  "  const token = body?.data?.session?.access_token;",
+                  "  if (token) pm.environment.set(\"access_token\", token);",
+                  "  const id = body?.data?.user?.id;",
+                  "  if (id) pm.environment.set(\"user_id\", String(id));",
+                  "}",
+                  "pm.test(\"Authentication request succeeded\", () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));",
+                  "pm.test(\"Response contains a session token\", () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body?.data?.session?.access_token).to.be.a(\"string\").and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Student\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login (capture access token)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"email\")) {",
+                  "  console.warn(\"Skipped: create/register the test user first.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "const token = body?.data?.session?.access_token;",
+                  "pm.test(\"Login returned HTTP success\", () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));",
+                  "pm.test(\"Login response contains access_token\", () => pm.expect(token).to.be.a(\"string\").and.not.empty);",
+                  "if (token) pm.environment.set(\"access_token\", token);",
+                  "if (body?.data?.user?.id) pm.environment.set(\"user_id\", String(body.data.user.id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Login - invalid credentials (optional negative test)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runNegativeTests\")) !== \"true\") { pm.execution.skipRequest(); }",
+                  "pm.environment.set(\"timestamp\", String(Date.now()));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Invalid request is rejected\", () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"qa_invalid_{{timestamp}}@example.invalid\",\n  \"password\": \"wrong-password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Signup creates persistent test data and is off by default. Enable runMutations only when ready. Login requires email/password from a successful signup or your own test account."
+    },
+    {
+      "name": "03 User Profile",
+      "item": [
+        {
+          "name": "GET Current User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON with data\", () => {",
+                  "  pm.response.to.be.json;",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/current",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Current User - update test name",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{updated_name}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/current",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Bearer token required. GET is read-only. PATCH changes the current test user profile and is disabled by default.",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{access_token}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "04 Reviews",
+      "item": [
+        {
+          "name": "GET Current User Reviews",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/current/reviews",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Review",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}",
+                  "if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.text()) {",
+                  "  const body = pm.response.json();",
+                  "  const id = body?.data?.review_id || body?.data?.id;",
+                  "  if (id) pm.environment.set(\"review_id\", String(id));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{review_product_id}},\n  \"content\": \"Created by StorePI API automation test.\",\n  \"rating\": 5,\n  \"recommends\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reviews",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Update Review by review_id",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Updated by StorePI API automation test.\",\n  \"rating\": 4,\n  \"recommends\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reviews/{{review_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews",
+                "{{review_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Review by review_id",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Delete returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reviews/{{review_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reviews",
+                "{{review_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "GET current user reviews requires token. Create → update → delete tests modify persistent data; enable mutations and run in order using a fresh account.",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{access_token}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "05 Shopping Cart",
+      "item": [
+        {
+          "name": "GET Current User Cart",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body=pm.response.json();",
+                  "pm.test(\"HTTP 200\",()=>pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\",()=>pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"responseTimeLimit\")||1500)));",
+                  "pm.test(\"Cart data exists\",()=>pm.expect(body).to.have.property(\"data\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/current/cart",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Add Product to Cart",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{product_id}},\n  \"quantity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/current/cart",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Remove Product from Cart",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{product_id}},\n  \"remove\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/current/cart",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Bearer token required. POST and PATCH modify the current user cart and are guarded by runMutations.",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{access_token}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "06 Wishlist",
+      "item": [
+        {
+          "name": "GET Current User Wishlist",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/current/wishlist",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Add Product to Wishlist",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{product_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/current/wishlist",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Remove Product from Wishlist",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{product_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/current/wishlist",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Bearer token required. POST/PATCH change the current user wishlist and are disabled by default.",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{access_token}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "07 Purchases",
+      "item": [
+        {
+          "name": "GET Current User Purchases",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Envelope contains data array\", () => {",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "  pm.expect(body.data).to.be.an(\"array\");",
+                  "});",
+                  "pm.test(\"Count is numeric when present\", () => {",
+                  "  if (Object.prototype.hasOwnProperty.call(body, \"count\")) pm.expect(body.count).to.be.a(\"number\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/purchases",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "purchases"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Purchase",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runMutations=true to allow this state-changing request.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}",
+                  "if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.text()) {",
+                  "  const body = pm.response.json();",
+                  "  const data = body?.data;",
+                  "  const first = Array.isArray(data) ? data[0] : data;",
+                  "  const id = first?.id || first?.purchase_id;",
+                  "  if (id) pm.environment.set(\"purchase_id\", String(id));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"products\": [\n    {\n      \"product_id\": {{product_id}},\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/purchases",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "purchases"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Purchase by ID",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get(\"access_token\")) {",
+                  "  console.warn(\"Skipped: login first so access_token is available.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON with data\", () => {",
+                  "  pm.response.to.be.json;",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/purchases/{{purchase_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "purchases",
+                "{{purchase_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Bearer token required. POST creates a persistent purchase record; it is guarded and is not executed during the read-only smoke run.",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{access_token}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "08 E2E Workflow (explicit opt-in)",
+      "item": [
+        {
+          "name": "E2E 1 - Signup fresh user",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped E2E: set runMutations=true only when you want to create a test account/cart/purchase.\");",
+                  "  pm.execution.skipRequest();",
+                  "}",
+                  "const stamp=Date.now();",
+                  "pm.environment.set(\"e2e_email\", `qa_e2e_${stamp}@example.com`);",
+                  "pm.environment.set(\"email\", pm.environment.get(\"e2e_email\"));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body=pm.response.json();",
+                  "const token=body?.data?.session?.access_token;",
+                  "pm.test(\"Signup succeeded and returned access token\",()=>{",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+                  "  pm.expect(token).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "if (token) pm.environment.set(\"access_token\",token);",
+                  "const id=body?.data?.user?.id; if(id) pm.environment.set(\"user_id\",String(id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"StorePI E2E Student\",\n  \"email\": \"{{e2e_email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E2E 2 - Login and capture token",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped E2E: set runMutations=true only when you want to create a test account/cart/purchase.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "const token = body?.data?.session?.access_token;",
+                  "pm.test(\"Login returned HTTP success\", () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));",
+                  "pm.test(\"Login response contains access_token\", () => pm.expect(token).to.be.a(\"string\").and.not.empty);",
+                  "if (token) pm.environment.set(\"access_token\", token);",
+                  "if (body?.data?.user?.id) pm.environment.set(\"user_id\", String(body.data.user.id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{e2e_email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E2E 3 - Select an in-stock product",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped E2E: set runMutations=true only when you want to create a test account/cart/purchase.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body=pm.response.json();",
+                  "pm.test(\"HTTP 200 and products array is non-empty\",()=>{",
+                  " pm.response.to.have.status(200); pm.expect(body.data).to.be.an(\"array\").that.is.not.empty;",
+                  "});",
+                  "const inStock=body.data.find(p=>p.in_stock===true) || body.data[0];",
+                  "pm.environment.set(\"product_id\",String(inStock.id));",
+                  "console.log(\"E2E selected product_id\",inStock.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products?in_stock=true&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "in_stock",
+                  "value": "true"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E2E 4 - Add selected product to cart",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped E2E: set runMutations=true only when you want to create a test account/cart/purchase.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{product_id}},\n  \"quantity\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/current/cart",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E2E 5 - Verify cart contains selected product",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped E2E: set runMutations=true only when you want to create a test account/cart/purchase.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body=pm.response.json();",
+                  "pm.test(\"Cart response has data\",()=>pm.expect(body).to.have.property(\"data\"));",
+                  "const cart=body.data;",
+                  "const products=cart?.cart_products || [];",
+                  "pm.test(\"Selected product appears in cart\",()=>pm.expect(products.some(x=>String(x.product_id)===String(pm.environment.get(\"product_id\")))).to.eql(true));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/current/cart",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E2E 6 - Create purchase",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped E2E: set runMutations=true only when you want to create a test account/cart/purchase.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Mutation returned an expected success status\", () => {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "if (pm.response.code !== 204 && pm.response.text()) {",
+                  "  pm.test(\"Successful response is valid JSON\", () => pm.response.to.be.json);",
+                  "}",
+                  "if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.text()) {",
+                  "  const body = pm.response.json();",
+                  "  const data = body?.data;",
+                  "  const first = Array.isArray(data) ? data[0] : data;",
+                  "  const id = first?.id || first?.purchase_id;",
+                  "  if (id) pm.environment.set(\"purchase_id\", String(id));",
+                  "}",
+                  "pm.test(\"Purchase ID was captured\",()=>pm.expect(pm.environment.get(\"purchase_id\")).to.be.a(\"string\").and.not.empty);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"products\": [\n    {\n      \"product_id\": {{product_id}},\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/purchases",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "purchases"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "E2E 7 - Get created purchase",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runMutations\")) !== \"true\") {",
+                  "  console.warn(\"Skipped E2E: set runMutations=true only when you want to create a test account/cart/purchase.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});",
+                  "pm.test(\"Response is JSON with data\", () => {",
+                  "  pm.response.to.be.json;",
+                  "  pm.expect(body).to.have.property(\"data\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/purchases/{{purchase_id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "purchases",
+                "{{purchase_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Complete flow creates one new user, one cart entry and one persistent purchase. Run this folder by itself with runMutations=true only after reading README."
+    },
+    {
+      "name": "09 Negative & Authorization Checks",
+      "item": [
+        {
+          "name": "GET Current User - no token (expected rejection)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (String(pm.environment.get(\"runNegativeTests\")) !== \"true\") {",
+                  "  console.warn(\"Skipped: set runNegativeTests=true to run this negative test.\");",
+                  "  pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Invalid request is rejected\", () => {",
+                  "  pm.expect(pm.response.code).to.be.at.least(400);",
+                  "});",
+                  "pm.test(\"Response time under configured limit\", () => {",
+                  "  const limit = Number(pm.environment.get(\"responseTimeLimit\") || 1500);",
+                  "  pm.expect(pm.response.responseTime).to.be.below(limit);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/current",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "current"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Safe negative checks only. They are off by default and do not create data; enable runNegativeTests=true to execute."
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://storepi.vercel.app/api/v1"
+    },
+    {
+      "key": "product_id",
+      "value": "1"
+    },
+    {
+      "key": "review_product_id",
+      "value": "2"
+    },
+    {
+      "key": "purchase_id",
+      "value": ""
+    },
+    {
+      "key": "review_id",
+      "value": ""
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "email",
+      "value": ""
+    },
+    {
+      "key": "e2e_email",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": "TestPass123!"
+    },
+    {
+      "key": "updated_name",
+      "value": "QA Student Updated"
+    },
+    {
+      "key": "user_id",
+      "value": ""
+    },
+    {
+      "key": "responseTimeLimit",
+      "value": "1500"
+    },
+    {
+      "key": "runMutations",
+      "value": "false"
+    },
+    {
+      "key": "runNegativeTests",
+      "value": "false"
+    },
+    {
+      "key": "timestamp",
+      "value": ""
+    }
+  ]
+}
